@@ -1,5 +1,3 @@
-from typing import Optional
-
 import requests
 from rich.console import Console
 from rich.table import Table
@@ -13,6 +11,11 @@ class Wrapper:
         self.db = DataLayer()
 
     def prettify_data(self, data: list[dict]) -> None:
+        """Displays given activities data using Rich table
+
+        Args:
+            data (list[dict]): activities data
+        """
         table = Table(title="Activities")
 
         columns = [
@@ -29,15 +32,13 @@ class Wrapper:
 
         for activity in data:
             table.add_row(
-                *[
-                    str(activity["key"]),
-                    activity["activity"],
-                    activity["type"],
-                    str(activity["participants"]),
-                    str(activity["price"]),
-                    activity["link"],
-                    str(activity["accessibility"]),
-                ],
+                str(activity["key"]),
+                activity["activity"],
+                activity["type"],
+                str(activity["participants"]),
+                str(activity["price"]),
+                activity["link"],
+                str(activity["accessibility"]),
                 style="bright_green",
             )
         console = Console()
