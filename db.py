@@ -3,6 +3,7 @@ import sqlite3
 from rich.console import Console
 
 
+# Custom exception to handle bored API response error
 class ActivityNotFountException(Exception):
     pass
 
@@ -17,6 +18,15 @@ class DataLayer:
             )
 
     def insert_activity(self, activity_data: dict) -> None:
+        """Inserts given activity into the database
+
+        Args:
+            activity_data (dict): json data received from bored API
+
+        Raises:
+            ActivityNotFountException: raised if json response contains error
+        """
+
         if activity_data.get("error") is not None:
             raise ActivityNotFountException()
 
@@ -40,6 +50,11 @@ class DataLayer:
                 console.print("This activitity has already been added to the database")
 
     def get_activities(self) -> list[dict]:
+        """Returns 5 last activities from the database
+
+        Returns:
+            list[dict]: db rows converted into dictionaries
+        """
         with self.conn as conn:
             cur = conn.cursor()
             data = cur.execute(

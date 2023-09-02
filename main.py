@@ -1,29 +1,41 @@
+from typing import Optional
+
 import typer
 from rich.console import Console
 
-from wrapper import Wrapper
-
 from db import ActivityNotFountException
-
+from wrapper import Wrapper
 
 wrapper = Wrapper()
 app = typer.Typer()
 
 
 @app.command()
-def list():
+def list() -> None:
+    """CLI command that displays 5 last activities from the database
+    """    
     wrapper.get_last_activities()
 
 
 @app.command()
 def new(
-    type: str = typer.Option(default=""),
-    participants=typer.Option(default=""),
-    price_min=typer.Option(default=""),
-    price_max=typer.Option(default=""),
-    accessibility_min=typer.Option(default=""),
-    accessibility_max=typer.Option(default=""),
+    type: Optional[str] = typer.Option(default=""),
+    participants: Optional[int] = typer.Option(default=""),
+    price_min: Optional[float] = typer.Option(default=""),
+    price_max: Optional[float] = typer.Option(default=""),
+    accessibility_min: Optional[float] = typer.Option(default=""),
+    accessibility_max: Optional[float] = typer.Option(default=""),
 ) -> None:
+    """CLI command that displays random activity and saves it in the database
+
+    Args:
+        type (Optional[str], optional): activity type. Defaults to typer.Option(default="").
+        participants (Optional[int], optional): number of participants. Defaults to typer.Option(default="").
+        price_min (Optional[float], optional): minimum price. Defaults to typer.Option(default="").
+        price_max (Optional[float], optional): maximum price. Defaults to typer.Option(default="").
+        accessibility_min (Optional[float], optional): minimum accessibility. Defaults to typer.Option(default="").
+        accessibility_max (Optional[float], optional): maximum accessibility. Defaults to typer.Option(default="").
+    """    
     try:
         wrapper.get_random_activity(
             type=type,

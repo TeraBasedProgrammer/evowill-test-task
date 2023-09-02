@@ -53,6 +53,16 @@ class Wrapper:
         minaccessibility: float | str = "",
         maxaccessibility: float | str = "",
     ) -> None:
+        """Gets random activity from bored API
+
+        Args:
+            type (str, optional): activity type. Defaults to "".
+            participants (int | str, optional): number of participants. Defaults to "".
+            minprice (float | str, optional): minimum price. Defaults to "".
+            maxprice (float | str, optional): maximum price. Defaults to "".
+            minaccessibility (float | str, optional): minimum accessibility. Defaults to "".
+            maxaccessibility (float | str, optional): maximum accessibility. Defaults to "".
+        """    
         response = requests.get(
             f"{self.base_link}?type={type}&participants={participants}&minprice={minprice}&maxprice={maxprice}&minaccessibility={minaccessibility}&maxaccessibility={maxaccessibility}"
         )
@@ -60,5 +70,7 @@ class Wrapper:
         self.prettify_data([response.json()])
 
     def get_last_activities(self) -> None:
+        """Returns 5 last activities from the database
+        """ 
         data = self.db.get_activities()
         self.prettify_data(data)
