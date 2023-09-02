@@ -56,3 +56,25 @@ This command should return the last 5 activities saved in the database.
  - Make sure that you include a dependencies file (requirements.txt, gemfile, package.json, etc.). But don't include any virtual environment or packages installed in your repository.
  - Add unit tests for your work.
 
+## Guide
+* Get random activity (without parameters):
+    ```bash
+    python3 -m src.main new
+    ```
+* Get random activity (with parameters):
+    ```bash
+    python -m src.main new --type="education" --participants=1 --price-min=0 --price-max=100 --accessibility-min=0 --accessibility-max=100
+    ```
+* Get last 5 activities:
+    ```bash
+    python3 -m src.main list
+    ```
+
+* Execute tests:
+    ```bash
+    pytest -v
+    ```
+
+
+
+
