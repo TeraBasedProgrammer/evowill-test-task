@@ -1,5 +1,7 @@
 import sqlite3
 
+from rich.console import Console
+
 
 class ActivityNotFountException(Exception):
     pass
@@ -11,7 +13,7 @@ class DataLayer:
 
         with self.conn as conn:
             conn.execute(
-                "CREATE TABLE IF NOT EXISTS activities(id INT PRIMARY KEY, title TEXT, type VARCHAR(50), participants INT, price REAL, link TEXT NULL, accessibility REAL)"
+                """CREATE TABLE IF NOT EXISTS activities(id INT PRIMARY KEY, title TEXT, type VARCHAR(50), participants INT, price REAL, link TEXT NULL, accessibility REAL);"""
             )
 
     def insert_activity(self, activity_data: dict) -> None:
@@ -21,8 +23,8 @@ class DataLayer:
         with self.conn as conn:
             try:
                 conn.execute(
-                    "INSERT INTO activities VALUES (%s, '%s', '%s', %s, %s, '%s', %s)"
-                    % (
+                    """INSERT INTO activities VALUES (?, ?, ?, ?, ?, ?, ?);""",
+                    (
                         activity_data["key"],
                         activity_data["activity"],
                         activity_data["type"],
@@ -30,16 +32,19 @@ class DataLayer:
                         activity_data["price"],
                         activity_data["link"],
                         activity_data["accessibility"],
-                    )
+                    ),
                 )
             except sqlite3.IntegrityError:
-                # Add custom exception and warning in main.py
-                pass
+                console = Console()
+                console.print("Warning: ", style="yellow", end="")
+                console.print("This activitity has already been added to the database")
 
     def get_activities(self) -> list[dict]:
         with self.conn as conn:
             cur = conn.cursor()
-            data = cur.execute("SELECT * FROM activities ORDER BY ROWID DESC LIMIT 5;")
+            data = cur.execute(
+                """SELECT * FROM activities ORDER BY ROWID DESC LIMIT 5;"""
+            )
 
             result_data = []
             for row in data.fetchall():

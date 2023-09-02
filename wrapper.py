@@ -43,14 +43,14 @@ class Wrapper:
         console = Console()
         console.print(table)
 
-    def get_activity(
+    def get_random_activity(
         self,
-        type: Optional[str] = "",
-        participants: Optional[int] = "",
-        minprice: Optional[float] = "",
-        maxprice: Optional[float] = "",
-        minaccessibility: Optional[float] = "",
-        maxaccessibility: Optional[float] = "",
+        type: str = "",
+        participants: int | str = "",
+        minprice: float | str = "",
+        maxprice: float | str = "",
+        minaccessibility: float | str = "",
+        maxaccessibility: float | str = "",
     ) -> None:
         response = requests.get(
             f"{self.base_link}?type={type}&participants={participants}&minprice={minprice}&maxprice={maxprice}&minaccessibility={minaccessibility}&maxaccessibility={maxaccessibility}"
