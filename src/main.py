@@ -10,8 +10,7 @@ app = typer.Typer()
 
 @app.command()
 def list() -> None:
-    """CLI command that displays 5 last activities from the database
-    """    
+    """CLI command that displays 5 last activities from the database"""
     wrapper.get_last_activities()
 
 
@@ -23,7 +22,7 @@ def new(
     price_max: str = typer.Option(default=""),
     accessibility_min: str = typer.Option(default=""),
     accessibility_max: str = typer.Option(default=""),
-) -> None: 
+) -> None:
     """CLI command that displays random activity and saves it in the database
 
     Args:
@@ -33,7 +32,7 @@ def new(
         price_max (str, optional): maximum price. Defaults to typer.Option(default="").
         accessibility_min (str, optional): minimum accessibility. Defaults to typer.Option(default="").
         accessibility_max (str, optional): maximum accessibility. Defaults to typer.Option(default="").
-    """    
+    """
     try:
         wrapper.get_random_activity(
             type=type,

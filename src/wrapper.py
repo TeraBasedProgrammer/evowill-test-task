@@ -43,8 +43,6 @@ class Wrapper:
             )
         console = Console()
         console.print(table)
-        # output = console.file.getvalue()
-        # print(output)
 
     def get_random_activity(
         self,
@@ -64,7 +62,7 @@ class Wrapper:
             maxprice (float | str, optional): maximum price. Defaults to "".
             minaccessibility (float | str, optional): minimum accessibility. Defaults to "".
             maxaccessibility (float | str, optional): maximum accessibility. Defaults to "".
-        """    
+        """
         response = requests.get(
             f"{self.base_link}?type={type}&participants={participants}&minprice={minprice}&maxprice={maxprice}&minaccessibility={minaccessibility}&maxaccessibility={maxaccessibility}"
         )
@@ -72,7 +70,6 @@ class Wrapper:
         self.prettify_data([response.json()])
 
     def get_last_activities(self) -> None:
-        """Returns 5 last activities from the database
-        """ 
+        """Returns 5 last activities from the database"""
         data = self.db.get_activities()
         self.prettify_data(data)
