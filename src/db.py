@@ -9,8 +9,8 @@ class ActivityNotFountException(Exception):
 
 
 class DataLayer:
-    def __init__(self) -> None:
-        self.conn = sqlite3.connect("database.sqlite")
+    def __init__(self, db_path: str) -> None:
+        self.conn = sqlite3.connect(db_path)
 
         with self.conn as conn:
             conn.execute(

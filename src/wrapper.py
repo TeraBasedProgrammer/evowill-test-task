@@ -2,13 +2,13 @@ import requests
 from rich.console import Console
 from rich.table import Table
 
-from db import DataLayer
+from src.db import DataLayer
 
 
 class Wrapper:
     def __init__(self) -> None:
         self.base_link = "http://www.boredapi.com/api/activity/"
-        self.db = DataLayer()
+        self.db = DataLayer("database.sqlite")
 
     def prettify_data(self, data: list[dict]) -> None:
         """Displays given activities data using Rich table
@@ -28,7 +28,7 @@ class Wrapper:
             "Acccessibility",
         ]
         for column in columns:
-            table.add_column(column)
+            table.add_column(column, justify="center")
 
         for activity in data:
             table.add_row(
@@ -43,6 +43,8 @@ class Wrapper:
             )
         console = Console()
         console.print(table)
+        # output = console.file.getvalue()
+        # print(output)
 
     def get_random_activity(
         self,
