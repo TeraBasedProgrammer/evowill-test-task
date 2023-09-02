@@ -1,6 +1,8 @@
 import random
 
-from src.db import DataLayer
+import pytest
+
+from src.db import ActivityNotFountException, DataLayer
 from tests.conftest import TEST_ACTIVITY
 
 
@@ -10,6 +12,12 @@ def test_insert_activity(get_activity) -> None:
 
     activity = get_activity()
     assert activity[0] == tuple(TEST_ACTIVITY.values())
+
+
+def test_activity_error() -> None:
+    db = DataLayer("tests/test.sqlite")
+    with pytest.raises(ActivityNotFountException):
+        db.insert_activity({"error": "Some response error"})
 
 
 def test_get_activities() -> None:
